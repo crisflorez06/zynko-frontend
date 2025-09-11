@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
@@ -11,11 +11,10 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./confirm-dialog.component.css']
 })
 export class ConfirmDialogComponent {
-  dialogRef = inject<MatDialogRef<ConfirmDialogComponent>>(MatDialogRef);
-  data = inject<{
-    message: string;
-}>(MAT_DIALOG_DATA);
-
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { message: string }
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close(false);

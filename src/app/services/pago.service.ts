@@ -1,60 +1,23 @@
-// ==========================
+// =============================
 // archivo: pago.service.ts
-// ==========================
-
-// Importaciones necesarias
-import { Injectable, inject } from '@angular/core';
+// =============================
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Pago } from '../models/pago';
 
-// Decorador para indicar que es un servicio inyectable
 @Injectable({
-  providedIn: 'root', // Hace que el servicio esté disponible en toda la app
+  providedIn: 'root',
 })
 export class PagoService {
-  private http = inject(HttpClient);
-
-  // URL base tomada desde el environment
   private apiUrl = `${environment.apiUrl}/pagos`;
 
-  // ===============================
-  // 1. Obtener todos los pagos
-  // ===============================
-  getPagos(): Observable<Pago[]> {
-    return this.http.get<Pago[]>(this.apiUrl);
-  }
+  constructor(private http: HttpClient) {}
 
-  // ===============================
-  // 2. Obtener pago por ID
-  // ===============================
-  getPagoById(id: number): Observable<Pago> {
-    return this.http.get<Pago>(`${this.apiUrl}/${id}`);
-  }
-
-  // ===============================
-  // 3. Crear nuevo pago
-  // ===============================
-  createPago(pago: Pago): Observable<Pago> {
-    return this.http.post<Pago>(this.apiUrl, pago);
-  }
-
-  // ===============================
-  // 4. Actualizar pago por ID
-  // ===============================
-  updatePago(id: number, pago: Pago): Observable<Pago> {
-    return this.http.put<Pago>(`${this.apiUrl}/${id}`, pago);
-  }
-
-  // ===============================
-  // 5. Eliminar pago por ID
-  // ===============================
-  deletePago(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
-
-  obtenerPago(codigo: string): Observable<Pago> {
-    return this.http.get<Pago>(`${this.apiUrl}/pago/${codigo}`);
+  /**
+   * Calcular el total a pagar por un ticket a partir de su código.
+   */
+  calcularTotal(codigo: string): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/calcular-total/${codigo}`);
   }
 }

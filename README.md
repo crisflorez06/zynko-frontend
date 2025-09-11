@@ -41,7 +41,7 @@ Construido como una Single-Page Application (SPA) con **Angular**, el proyecto e
 Clona el repositorio:
 
 ```bash
-git clone https://github.com/tu-usuario/parqueadero_frontend.git
+git clone https://github.com/crisflorez06/parqueadero-frontend
 cd parqueadero_frontend
 ```
 
@@ -76,7 +76,8 @@ La aplicación estará disponible en: [http://localhost:4200/](http://localhost:
 
 ## Configuración de Impresora
 
-Para el correcto funcionamiento de la impresión de tickets, es necesario agregar el archivo `digital-certificate.txt` en la carpeta `assets`.
+Para habilitar la impresión de tickets, la aplicación se integra con **QZ Tray**. El usuario final debe proporcionar su propio certificado digital (de prueba o producción) y colocarlo en la ruta `src/assets/js/` con el nombre `digital-certificate.txt`.
+
 
 ---
 

@@ -2,20 +2,20 @@
 // archivo: vehiculo.service.ts
 // ============================
 
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Vehiculo } from '../models/vehiculo';
+import { Vehiculo } from '../models/vehiculos';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VehiculoService {
-  private http = inject(HttpClient);
-
 
   private apiUrl = `${environment.apiUrl}/vehiculos`;
+
+  constructor(private http: HttpClient) {}
 
   // ===============================
   // 1. Obtener todos los vehículos

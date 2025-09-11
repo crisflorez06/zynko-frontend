@@ -1,10 +1,15 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { CommonModule } from '@angular/common';
-import { Usuario } from '../../models/usuario';
-
+import { UsuarioLogin } from '../../models/usuario';
+import { MensajeService } from '../../services/mensaje.service';
 
 @Component({
   selector: 'app-login',
@@ -14,14 +19,15 @@ import { Usuario } from '../../models/usuario';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  private fb = inject(FormBuilder);
-  private router = inject(Router);
-  private usuarioService = inject(UsuarioService);
-
   formularioLogin: FormGroup;
-  error: string | null = null;
+  mensajeError: string = '';
 
-  constructor() {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private usuarioService: UsuarioService,
+    private mensajeService: MensajeService
+  ) {
     this.formularioLogin = this.fb.group({
       nombre: ['', Validators.required],
       cedula: ['', Validators.required],
@@ -30,21 +36,23 @@ export class LoginComponent {
 
   onSubmit(): void {
     if (this.formularioLogin.valid) {
-      const credenciales: Usuario = this.formularioLogin.value;
+      const credenciales: UsuarioLogin = this.formularioLogin.value;
 
-      this.usuarioService
-        .login(credenciales.nombre, credenciales.cedula)
-        .subscribe({
-          next: (isLoggedIn) => {
-            if (isLoggedIn) {
-              this.router.navigate(['/tabla']);
-            }
-          },
-          error: (err) => {
-            console.error('Error de inicio de sesión:', err);
-            this.error = 'Credenciales incorrectas. Por favor, inténtelo de nuevo.';
+      this.usuarioService.login(credenciales).subscribe({
+        next: (usuario) => {
+          if (usuario) {
+            this.router.navigate(['/tabla']);
           }
-        });
+        },
+        error: (err) => {
+          if (err.status === 409) {
+            this.mensajeError = 'Ya existe un turno activo.';
+          } else {
+            this.mensajeError =
+              'Credenciales incorrectas. Por favor, inténtelo de nuevo.';
+          }
+        },
+      });
     }
   }
 }
