@@ -1,0 +1,47 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%;">
+    <!-- Título -->
+    <h2 class="text-center mb-3">Iniciar Turno</h2>
+
+    <!-- Formulario -->
+    <form [formGroup]="formularioLogin" (ngSubmit)="onSubmit()">
+
+      <!-- Nombre -->
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input
+          id="nombre"
+          type="text"
+          formControlName="nombre"
+          class="form-control"
+          placeholder="Ingrese su nombre completo"
+        />
+      </div>
+
+      <!-- Cédula -->
+      <div class="mb-3">
+        <label for="cedula" class="form-label">Cédula</label>
+        <input
+          id="cedula"
+          type="password"
+          formControlName="cedula"
+          class="form-control"
+          placeholder="Ingrese su número de cédula"
+        />
+      </div>
+
+      <!-- Botón -->
+      <button
+        type="submit"
+        class="btn btn-primary w-100"
+        [disabled]="formularioLogin.invalid">
+        Ingresar
+      </button>
+
+      <!-- Mensaje de error -->
+      <div *ngIf="error" class="alert alert-danger mt-3 text-center">
+        {{ error }}
+      </div>
+    </form>
+  </div>
+</div>
