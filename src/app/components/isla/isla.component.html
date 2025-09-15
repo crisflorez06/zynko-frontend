@@ -1,0 +1,368 @@
+<div class="container mt-4">
+  <div class="row">
+    <!-- ISLAS -->
+    <div class="col-md-6">
+      <!-- Isla 1 -->
+      <h5>Isla 1</h5>
+      <div class="d-flex mb-3">
+        <!-- Corriente -->
+        <fieldset class="p-2 border border-danger me-2 rounded">
+          <legend class="float-none w-auto text-danger px-2">Corriente</legend>
+          <div class="mb-2">
+            <label for="isla1N1" class="form-label">N1</label>
+            <input type="number" id="isla1N1" class="form-control" />
+          </div>
+          <div class="mb-2">
+            <label for="isla1N3" class="form-label">N3</label>
+            <input type="number" id="isla1N3" class="form-control" />
+          </div>
+        </fieldset>
+
+        <!-- Diésel -->
+        <fieldset class="p-2 border border-warning rounded">
+          <legend class="float-none w-auto text-warning px-2">Diésel</legend>
+          <div class="mb-2">
+            <label for="isla1N2" class="form-label">N2</label>
+            <input type="number" id="isla1N2" class="form-control" />
+          </div>
+          <div class="mb-2">
+            <label for="isla1N4" class="form-label">N4</label>
+            <input type="number" id="isla1N4" class="form-control" />
+          </div>
+        </fieldset>
+      </div>
+
+      <!-- Isla 2 -->
+      <h5>Isla 2</h5>
+      <div class="d-flex">
+        <!-- Corriente -->
+        <fieldset class="p-2 border border-danger me-2 rounded">
+          <legend class="float-none w-auto text-danger px-2">Corriente</legend>
+          <div class="mb-2">
+            <label for="isla2N1" class="form-label">N1</label>
+            <input type="number" id="isla2N1" class="form-control" />
+          </div>
+          <div class="mb-2">
+            <label for="isla2N3" class="form-label">N3</label>
+            <input type="number" id="isla2N3" class="form-control" />
+          </div>
+        </fieldset>
+
+        <!-- Diésel -->
+        <fieldset class="p-2 border border-warning rounded">
+          <legend class="float-none w-auto text-warning px-2">Diésel</legend>
+          <div class="mb-2">
+            <label for="isla2N2" class="form-label">N2</label>
+            <input type="number" id="isla2N2" class="form-control" />
+          </div>
+          <div class="mb-2">
+            <label for="isla2N4" class="form-label">N4</label>
+            <input type="number" id="isla2N4" class="form-control" />
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+    <!-- PANEL DERECHO -->
+    <div class="col-md-6">
+      <form>
+        <!-- Total Día (informativo) -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">Total Día</label>
+          <div class="border rounded p-2 bg-light">0</div>
+        </div>
+
+        <!-- Campos con label + input + botón Ver -->
+        <div class="d-flex align-items-center mb-2">
+          <label for="tiros" class="form-label me-2" style="width: 80px"
+            >Tiros</label
+          >
+          <input type="number" id="tiros" class="form-control me-2" />
+          <button
+            type="button"
+            class="btn btn-outline-primary btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#tirosModal"
+          >
+            Ver
+          </button>
+        </div>
+
+        <div class="d-flex align-items-center mb-2">
+          <label for="creditos" class="form-label me-2" style="width: 80px"
+            >Créditos</label
+          >
+          <input type="number" id="creditos" class="form-control me-2" />
+          <button
+            type="button"
+            class="btn btn-outline-primary btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#creditosModal"
+          >
+            Ver
+          </button>
+        </div>
+
+        <div class="d-flex align-items-center mb-2">
+          <label for="visas" class="form-label me-2" style="width: 80px"
+            >Visas</label
+          >
+          <input type="number" id="visas" class="form-control me-2" />
+          <button
+            type="button"
+            class="btn btn-outline-primary btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#visasModal"
+          >
+            Ver
+          </button>
+        </div>
+
+        <div class="d-flex align-items-center mb-2">
+          <label for="gastos" class="form-label me-2" style="width: 80px"
+            >Gastos</label
+          >
+          <input type="number" id="gastos" class="form-control me-2" />
+          <button
+            type="button"
+            class="btn btn-outline-primary btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#gastosModal"
+          >
+            Ver
+          </button>
+        </div>
+
+        <div class="d-flex align-items-center mb-2">
+          <label for="cuadre" class="form-label me-2" style="width: 80px"
+            >Cuadre</label
+          >
+          <input type="number" id="cuadre" class="form-control me-2" />
+          <button
+            type="button"
+            class="btn btn-outline-primary btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#cuadreModal"
+          >
+            Ver
+          </button>
+        </div>
+      </form>
+      <!-- Botones para abrir modales -->
+      <div class="d-flex justify-content-between mt-4">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-toggle="modal"
+          data-bs-target="#lavaderoModal"
+        >
+          Lavadero
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-toggle="modal"
+          data-bs-target="#parqueoModal"
+        >
+          Parqueo
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-toggle="modal"
+          data-bs-target="#aceitesModal"
+        >
+          Aceites
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALES -->
+<!-- Lavadero -->
+<div class="modal fade" id="lavaderoModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Lavadero</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Cerrar"
+        ></button>
+      </div>
+      <div class="modal-body">Contenido del Lavadero...</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cerrar
+        </button>
+        <button type="button" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Parqueo -->
+<div class="modal fade" id="parqueoModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Parqueo</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Cerrar"
+        ></button>
+      </div>
+      <div class="modal-body">Contenido del Parqueo...</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cerrar
+        </button>
+        <button type="button" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Aceites -->
+<div class="modal fade" id="aceitesModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Aceites</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Cerrar"
+        ></button>
+      </div>
+      <div class="modal-body">Contenido de Aceites...</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cerrar
+        </button>
+        <button type="button" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Tiros -->
+<div
+  class="modal fade"
+  id="tirosModal"
+  tabindex="-1"
+  aria-labelledby="tirosLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="tirosLabel">Detalle Tiros</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">Aquí va la información de Tiros.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Créditos -->
+<div
+  class="modal fade"
+  id="creditosModal"
+  tabindex="-1"
+  aria-labelledby="creditosLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="creditosLabel">Detalle Créditos</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">Aquí va la información de Créditos.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Visas -->
+<div
+  class="modal fade"
+  id="visasModal"
+  tabindex="-1"
+  aria-labelledby="visasLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="visasLabel">Detalle Visas</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">Aquí va la información de Visas.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Gastos -->
+<div
+  class="modal fade"
+  id="gastosModal"
+  tabindex="-1"
+  aria-labelledby="gastosLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="gastosLabel">Detalle Gastos</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">Aquí va la información de Gastos.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Cuadre -->
+<div
+  class="modal fade"
+  id="cuadreModal"
+  tabindex="-1"
+  aria-labelledby="cuadreLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cuadreLabel">Detalle Cuadre</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <div class="modal-body">Aquí va la información de Cuadre.</div>
+    </div>
+  </div>
+</div>
