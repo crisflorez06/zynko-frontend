@@ -41,5 +41,5 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Secret files
-assets/digital-certificate.txt
+# Ignore QZ Tray certificate
+src/assets/js/digital-certificate.txt

@@ -48,6 +48,12 @@ export const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'isla',
+    loadComponent: () =>
+      import('./components/isla/isla.component').then((m) => m.IslaComponent),
+    canActivate: [AuthGuard],
+  },
 
   // 3. Redirección raíz -> tabla (protegida)
   { path: '', redirectTo: 'tabla', pathMatch: 'full' },
