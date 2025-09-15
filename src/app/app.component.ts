@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
@@ -23,9 +23,14 @@ import { UsuarioService } from './services/usuario.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  private usuarioService = inject(UsuarioService);
+
   usuarioActual$: Usuario | null;
 
-  constructor(private usuarioService: UsuarioService) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.usuarioActual$ = this.usuarioService.getUsuarioActual();
   }
 }

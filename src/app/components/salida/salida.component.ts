@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormsModule,
@@ -25,17 +25,19 @@ import { switchMap, map } from 'rxjs/operators';
   styleUrl: './salida.component.css',
 })
 export class SalidaComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private ticketService = inject(TicketService);
+  private pagoService = inject(PagoService);
+  private usuarioService = inject(UsuarioService);
+  private mensajeService = inject(MensajeService);
+
   formularioBusqueda: FormGroup;
   usuario: Usuario | null = null;
   ticketEncontrado: TicketResponse | null = null;
 
-  constructor(
-    private fb: FormBuilder,
-    private ticketService: TicketService,
-    private pagoService: PagoService,
-    private usuarioService: UsuarioService,
-    private mensajeService: MensajeService
-  ) {
+  constructor();
+
+  constructor() {
     this.formularioBusqueda = this.fb.group({
       codigo: ['', Validators.required],
     });

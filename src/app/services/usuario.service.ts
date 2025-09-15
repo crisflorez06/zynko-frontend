@@ -1,5 +1,5 @@
 // usuario.service.ts
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -12,12 +12,17 @@ import { Usuario, UsuarioLogin } from '../models/usuario';
   providedIn: 'root',
 })
 export class UsuarioService {
+  private http = inject(HttpClient);
+
   private apiUrl = `${environment.apiUrl}/usuarios`;
 
   private usuarioActualSubject = new BehaviorSubject<Usuario | null>(null);
   usuarioActual$ = this.usuarioActualSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     // Restaurar sesión si hay usuario guardado
     const savedUser = localStorage.getItem('usuarioActual');
     if (savedUser) {

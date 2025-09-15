@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormsModule,
@@ -44,6 +44,15 @@ import { of } from 'rxjs';
   providers: [DatePipe],
 })
 export class EntradaComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private ticketService = inject(TicketService);
+  private mensajeService = inject(MensajeService);
+  private usuarioService = inject(UsuarioService);
+  private TarifaService = inject(TarifaService);
+  private filtrosService = inject(FiltroService);
+  private qzService = inject(QzService);
+  private datePipe = inject(DatePipe);
+
   visibleForm: string = 'entrada';
   formularioEntrada: FormGroup;
   formularioReimpresion: FormGroup;
@@ -60,16 +69,7 @@ export class EntradaComponent implements OnInit {
     parqueaderos: [],
   };
 
-  constructor(
-    private fb: FormBuilder,
-    private ticketService: TicketService,
-    private mensajeService: MensajeService,
-    private usuarioService: UsuarioService,
-    private TarifaService: TarifaService,
-    private filtrosService: FiltroService,
-    private qzService: QzService,
-    private datePipe: DatePipe
-  ) {
+  constructor() {
     this.formularioEntrada = this.fb.group({
       placa: ['', Validators.required],
       tipoVehiculo: ['', Validators.required],

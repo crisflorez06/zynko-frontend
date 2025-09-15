@@ -2,17 +2,17 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Numeracion } from '../models/cierreIsla';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PagoService {
+export class CierreIslaService {
   private http = inject(HttpClient);
 
-  private apiUrl = `${environment.apiUrl}/pagos`;
+  private apiUrl = `${environment.apiUrl}/turnos-isla`;
 
-
-  calcularTotal(codigo: string): Observable<number> {
-    return this.http.get<number>(`${this.apiUrl}/calcular-total/${codigo}`);
+  getNumeracionTurnoActivo(): Observable<Numeracion> {
+    return this.http.get<Numeracion>(`${this.apiUrl}/numeracion-inicial`);
   }
 }
