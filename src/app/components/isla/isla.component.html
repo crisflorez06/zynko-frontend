@@ -75,9 +75,7 @@
             <h5>Isla 2</h5>
             <div class="d-flex">
               <!-- Corriente -->
-              <fieldset
-                class="p-2 border border-danger rounded flex-fill me-1"
-              >
+              <fieldset class="p-2 border border-danger rounded flex-fill me-1">
                 <legend class="float-none w-auto text-danger px-2">
                   Corriente
                 </legend>
@@ -152,14 +150,14 @@
 
     <!-- PANEL DERECHO -->
     <div class="col-md-6">
-      <form>
+      <form [formGroup]="formularioTurno">
         <!-- Total Día (informativo) -->
         <div class="mb-3">
           <label for="totalDia" class="form-label fw-bold">Total Día</label>
           <input
             id="totalDia"
             class="form-control bg-light"
-            value="{{ turnoActivo?.totalVentas| number:'1.2-2' }}"
+            formControlName="totalVentas"
             readonly
           />
         </div>
@@ -169,7 +167,13 @@
           <label for="tiros" class="form-label me-2" style="width: 80px"
             >Tiros</label
           >
-          <input type="number" id="tiros" class="form-control me-2" />
+          <input
+            type="number"
+            id="tiros"
+            class="form-control me-2"
+            formControlName="totalTiros"
+            readonly
+          />
           <button
             type="button"
             class="btn btn-outline-primary btn-sm"
@@ -344,29 +348,6 @@
   </div>
 </div>
 
-<!-- Modal Tiros -->
-<div
-  class="modal fade"
-  id="tirosModal"
-  tabindex="-1"
-  aria-labelledby="tirosLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="tirosLabel">Detalle Tiros</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-      <div class="modal-body">Aquí va la información de Tiros.</div>
-    </div>
-  </div>
-</div>
-
 <!-- Modal Créditos -->
 <div
   class="modal fade"
@@ -459,155 +440,5 @@
   </div>
 </div>
 
-<!-- Modal Numeración Inicial -->
-<div
-  class="modal fade"
-  id="numeracionInicialModal"
-  tabindex="-1"
-  aria-labelledby="numeracionInicialModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="numeracionInicialModalLabel">
-          Numeración Inicial
-        </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Cerrar"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="formularioNumeracionInicial">
-          <!-- Isla 1 -->
-          <h5>Isla 1</h5>
-          <div class="d-flex mb-3">
-            <!-- Corriente -->
-            <fieldset class="p-2 border border-danger rounded flex-fill me-1">
-              <legend class="float-none w-auto text-danger px-2">
-                Corriente
-              </legend>
-              <div class="mb-2">
-                <label class="form-label">N1</label>
-                <input
-                  type="number"
-                  formControlName="gasolina1"
-                  class="form-control"
-                />
-              </div>
-              <div class="mb-2">
-                <label class="form-label">N3</label>
-                <input
-                  type="number"
-                  formControlName="gasolina3"
-                  class="form-control"
-                />
-              </div>
-            </fieldset>
-
-            <!-- Diésel -->
-            <fieldset class="p-2 border border-warning rounded flex-fill ms-1">
-              <legend class="float-none w-auto text-warning px-2">
-                Diésel
-              </legend>
-              <div class="mb-2">
-                <label class="form-label">N2</label>
-                <input
-                  type="number"
-                  formControlName="diesel1"
-                  class="form-control"
-                />
-              </div>
-              <div class="mb-2">
-                <label class="form-label">N4</label>
-                <input
-                  type="number"
-                  formControlName="diesel3"
-                  class="form-control"
-                />
-              </div>
-            </fieldset>
-          </div>
-
-          <!-- Isla 2 -->
-          <h5>Isla 2</h5>
-          <div class="d-flex">
-            <!-- Corriente -->
-            <fieldset class="p-2 border border-danger rounded flex-fill me-1">
-              <legend class="float-none w-auto text-danger px-2">
-                Corriente
-              </legend>
-              <div class="mb-2">
-                <label class="form-label">N1</label>
-                <input
-                  type="number"
-                  formControlName="gasolina2"
-                  class="form-control"
-                />
-              </div>
-              <div class="mb-2">
-                <label class="form-label">N3</label>
-                <input
-                  type="number"
-                  formControlName="gasolina4"
-                  class="form-control"
-                />
-              </div>
-            </fieldset>
-
-            <!-- Diésel -->
-            <fieldset class="p-2 border border-warning rounded flex-fill ms-1">
-              <legend class="float-none w-auto text-warning px-2">
-                Diésel
-              </legend>
-              <div class="mb-2">
-                <label class="form-label">N2</label>
-                <input
-                  type="number"
-                  formControlName="diesel2"
-                  class="form-control"
-                />
-              </div>
-              <div class="mb-2">
-                <label class="form-label">N4</label>
-                <input
-                  type="number"
-                  formControlName="diesel4"
-                  class="form-control"
-                />
-              </div>
-            </fieldset>
-          </div>
-
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Cerrar
-            </button>
-            <button
-              type="button"
-              class="btn btn-warning"
-              (click)="habilitarEdicion()"
-            >
-              Editar
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              (click)="guardar()"
-              [disabled]="formularioNumeracionInicial.disabled"
-            >
-              Guardar
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+<app-numeracion-modal></app-numeracion-modal>
+<app-tiros-modal></app-tiros-modal>

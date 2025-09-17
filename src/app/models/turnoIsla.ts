@@ -19,5 +19,6 @@ export interface TurnoIslaResponse {
   diesel3: number;
   diesel4: number;
   totalVentas: number;
+  totalTiros: number;
 }
 
