@@ -1,0 +1,151 @@
+<div
+  class="modal fade"
+  id="numeracionInicialModal"
+  tabindex="-1"
+  aria-labelledby="numeracionInicialModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="numeracionInicialModalLabel">
+          Numeración Inicial
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Cerrar"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formularioNumeracionInicial">
+          <!-- Isla 1 -->
+          <h5>Isla 1</h5>
+          <div class="d-flex mb-3">
+            <!-- Corriente -->
+            <fieldset class="p-2 border border-danger rounded flex-fill me-1">
+              <legend class="float-none w-auto text-danger px-2">
+                Corriente
+              </legend>
+              <div class="mb-2">
+                <label class="form-label">N1</label>
+                <input
+                  type="number"
+                  formControlName="gasolina1"
+                  class="form-control"
+                />
+              </div>
+              <div class="mb-2">
+                <label class="form-label">N3</label>
+                <input
+                  type="number"
+                  formControlName="gasolina3"
+                  class="form-control"
+                />
+              </div>
+            </fieldset>
+
+            <!-- Diésel -->
+            <fieldset class="p-2 border border-warning rounded flex-fill ms-1">
+              <legend class="float-none w-auto text-warning px-2">
+                Diésel
+              </legend>
+              <div class="mb-2">
+                <label class="form-label">N2</label>
+                <input
+                  type="number"
+                  formControlName="diesel1"
+                  class="form-control"
+                />
+              </div>
+              <div class="mb-2">
+                <label class="form-label">N4</label>
+                <input
+                  type="number"
+                  formControlName="diesel3"
+                  class="form-control"
+                />
+              </div>
+            </fieldset>
+          </div>
+
+          <!-- Isla 2 -->
+          <h5>Isla 2</h5>
+          <div class="d-flex">
+            <!-- Corriente -->
+            <fieldset class="p-2 border border-danger rounded flex-fill me-1">
+              <legend class="float-none w-auto text-danger px-2">
+                Corriente
+              </legend>
+              <div class="mb-2">
+                <label class="form-label">N1</label>
+                <input
+                  type="number"
+                  formControlName="gasolina2"
+                  class="form-control"
+                />
+              </div>
+              <div class="mb-2">
+                <label class="form-label">N3</label>
+                <input
+                  type="number"
+                  formControlName="gasolina4"
+                  class="form-control"
+                />
+              </div>
+            </fieldset>
+
+            <!-- Diésel -->
+            <fieldset class="p-2 border border-warning rounded flex-fill ms-1">
+              <legend class="float-none w-auto text-warning px-2">
+                Diésel
+              </legend>
+              <div class="mb-2">
+                <label class="form-label">N2</label>
+                <input
+                  type="number"
+                  formControlName="diesel2"
+                  class="form-control"
+                />
+              </div>
+              <div class="mb-2">
+                <label class="form-label">N4</label>
+                <input
+                  type="number"
+                  formControlName="diesel4"
+                  class="form-control"
+                />
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <button
+              type="button"
+              class="btn btn-warning"
+              (click)="habilitarEdicion()"
+            >
+              Editar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="guardarNumeracionInicial()"
+              [disabled]="formularioNumeracionInicial.disabled"
+            >
+              Guardar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
