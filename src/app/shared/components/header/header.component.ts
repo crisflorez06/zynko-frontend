@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Usuario } from '../../../models/usuario';
 import { UsuarioService } from '../../../services/usuario.service';
@@ -19,17 +19,20 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   providers: [DatePipe],
 })
 export class HeaderComponent implements OnInit {
+  private usuarioService = inject(UsuarioService);
+  private router = inject(Router);
+  private ticketService = inject(TicketService);
+  private mensajeService = inject(MensajeService);
+  private qzService = inject(QzService);
+  private cierreTurnoService = inject(CierreTurnoService);
+  private dialog = inject(MatDialog);
+
   usuario: Usuario | null = null;
 
-  constructor(
-    private usuarioService: UsuarioService,
-    private router: Router,
-    private ticketService: TicketService,
-    private mensajeService: MensajeService,
-    private qzService: QzService,
-    private cierreTurnoService: CierreTurnoService,
-    private dialog: MatDialog
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.usuarioService.usuarioActual$.subscribe((user) => {

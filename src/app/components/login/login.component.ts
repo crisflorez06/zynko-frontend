@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -19,15 +19,18 @@ import { MensajeService } from '../../services/mensaje.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private usuarioService = inject(UsuarioService);
+  private mensajeService = inject(MensajeService);
+
   formularioLogin: FormGroup;
   mensajeError: string = '';
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private usuarioService: UsuarioService,
-    private mensajeService: MensajeService
-  ) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.formularioLogin = this.fb.group({
       nombre: ['', Validators.required],
       cedula: ['', Validators.required],

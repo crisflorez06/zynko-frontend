@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule, DatePipe } from '@angular/common';
 import { CierreTurnoService } from '../../services/cierre-turno.service';
@@ -28,6 +28,12 @@ import { TicketService } from '../../services/ticket.service';
   styleUrls: ['./turnos.component.css'],
 })
 export class TurnosComponent implements OnInit {
+  private cierreTurnoService = inject(CierreTurnoService);
+  private mensajeService = inject(MensajeService);
+  private qzService = inject(QzService);
+  private filtrosService = inject(FiltroService);
+  private ticketService = inject(TicketService);
+
   cierres: TicketCierreTurnoResponse[] = [];
 
   public totalElementos = 0;
@@ -46,13 +52,10 @@ export class TurnosComponent implements OnInit {
     parqueaderos: [],
   };
 
-  constructor(
-    private cierreTurnoService: CierreTurnoService,
-    private mensajeService: MensajeService,
-    private qzService: QzService,
-    private filtrosService: FiltroService,
-    private ticketService: TicketService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.cargarCierres();

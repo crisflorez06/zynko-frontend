@@ -1,7 +1,4 @@
-// =============================
-// archivo: ticket.service.ts
-// =============================
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -18,11 +15,10 @@ import { DatePipe } from '@angular/common';
   providedIn: 'root',
 })
 export class TicketService {
+  private http = inject(HttpClient);
+  private datePipe = inject(DatePipe);
+
   private apiUrl = `${environment.apiUrl}/tickets`;
-
-  constructor(private http: HttpClient, private datePipe: DatePipe,
-
-  ) {}
 
   /**
    * Obtener todos los tickets con paginación y filtros opcionales.

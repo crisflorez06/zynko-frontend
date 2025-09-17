@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
 import { TicketService } from '../../services/ticket.service';
@@ -30,6 +30,10 @@ import { FiltroService } from '../../services/filtro.service';
   styleUrl: './tabla.component.css',
 })
 export class TablaComponent implements OnInit {
+  private ticketService = inject(TicketService);
+  private mensajeService = inject(MensajeService);
+  private filtrosService = inject(FiltroService);
+
   public tickets: TicketResponse[] = [];
 
   public totalElementos = 0;
@@ -55,11 +59,10 @@ export class TablaComponent implements OnInit {
     parqueaderos: [],
   };
 
-  constructor(
-    private ticketService: TicketService,
-    private mensajeService: MensajeService,
-    private filtrosService: FiltroService
-  ) {}
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.cargarTickets();
