@@ -10,6 +10,8 @@ import {
 import { TiroService } from '../../../services/tiro.service';
 import { MensajeService } from '../../../services/mensaje.service';
 import { Tiro } from '../../../models/tiro';
+import { TurnoIslaStore } from '../../../store/turno-isla.store';
+import { TurnoIslaService } from '../../../services/turnoIsla.service';
 
 @Component({
   selector: 'app-tiros-modal',
@@ -21,6 +23,12 @@ export class TirosModalComponent implements OnInit {
   private fb = inject(FormBuilder);
   private tiroService = inject(TiroService);
   private mensajeService = inject(MensajeService);
+
+  private turnoIslaService = inject(TurnoIslaService);
+
+  private store = inject(TurnoIslaStore);
+
+  turno$ = this.store.turno$;
 
   formularioTiro: FormGroup;
   tiros: Tiro[] = [];
@@ -34,6 +42,9 @@ export class TirosModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.turnoIslaService.getTurnoActivo().subscribe((turno) => {
+      this.store.setTurno(turno);
+    });
     this.getTiros();
   }
 
@@ -41,6 +52,9 @@ export class TirosModalComponent implements OnInit {
     this.tiroService.getTirosPorTurno().subscribe({
       next: (data: Tiro[]) => {
         this.tiros = data;
+
+        const totalTiros = data.reduce((sum, tiro) => sum + tiro.cantidad, 0);
+        this.store.actualizarTiros(totalTiros);
       },
       error: () => {
         this.mensajeService.error('Error al traer los tiros');
@@ -61,15 +75,17 @@ export class TirosModalComponent implements OnInit {
         ...this.tiroSeleccionado,
         cantidad: cantidad,
       };
-      this.tiroService.actualizar(tiroActualizado.id!, tiroActualizado).subscribe({
-        next: () => {
-          this.mensajeService.success('Tiro actualizado con éxito');
-          this.ocultarFormularioTiro();
-        },
-        error: () => {
-          this.mensajeService.error('Error al actualizar el tiro');
-        },
-      });
+      this.tiroService
+        .actualizar(tiroActualizado.id!, tiroActualizado)
+        .subscribe({
+          next: () => {
+            this.mensajeService.success('Tiro actualizado con éxito');
+            this.ocultarFormularioTiro();
+          },
+          error: () => {
+            this.mensajeService.error('Error al actualizar el tiro');
+          },
+        });
     } else {
       // Modo creación
       this.tiroService.crearTiro(cantidad).subscribe({
@@ -78,7 +94,9 @@ export class TirosModalComponent implements OnInit {
           this.ocultarFormularioTiro(); // Vuelve a la vista de tabla
         },
         error: (error) => {
-          this.mensajeService.error('Error al registrar el tiro: ' + error.message);
+          this.mensajeService.error(
+            'Error al registrar el tiro: ' + error.message
+          );
         },
       });
     }

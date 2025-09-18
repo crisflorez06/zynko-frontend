@@ -144,7 +144,6 @@ export class EntradaComponent implements OnInit {
   onSubmitEntrada(): void {
     if (this.formularioEntrada.valid) {
       const ticketEntrada: TicketEntradaRequest = this.formularioEntrada.value;
-      //asignamos el usuario al dato faltante del request
       ticketEntrada.usuarioRecibioId = this.usuario?.id || 0;
 
       this.ticketService.crearEntrada(ticketEntrada).subscribe({

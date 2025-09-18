@@ -59,10 +59,6 @@ export class TablaComponent implements OnInit {
     parqueaderos: [],
   };
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {}
 
   ngOnInit(): void {
     this.cargarTickets();

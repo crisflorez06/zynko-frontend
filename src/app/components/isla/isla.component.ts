@@ -7,39 +7,42 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { CierreIslaService } from '../../services/turno-isla.service';
-import { Usuario } from '../../models/usuario';
+import { TurnoIslaService } from '../../services/turnoIsla.service';
 import { MensajeService } from '../../services/mensaje.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { TicketResponse } from '../../models/tickets';
-import { Numeracion, TurnoIslaResponse } from '../../models/turnoIsla';
-import { NumeracionModalComponent } from "../modales/numeracion-modal/numeracion-modal.component";
-import { TirosModalComponent } from "../modales/tiros-modal/tiros-modal.component";
+import { Numeracion } from '../../models/turnoIsla';
+import { NumeracionModalComponent } from '../modales/numeracion-modal/numeracion-modal.component';
+import { TirosModalComponent } from '../modales/tiros-modal/tiros-modal.component';
+import { TurnoIslaStore } from '../../store/turno-isla.store';
 
 @Component({
   selector: 'app-isla',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatSnackBarModule, NumeracionModalComponent, TirosModalComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    NumeracionModalComponent,
+    TirosModalComponent,
+  ],
   templateUrl: './isla.component.html',
   styleUrl: './isla.component.css',
 })
 export class IslaComponent implements OnInit {
   private fb = inject(FormBuilder);
-  private CierreIslaService = inject(CierreIslaService);
+  private store = inject(TurnoIslaStore);
+  private turnoIslaService = inject(TurnoIslaService);
   private mensajeService = inject(MensajeService);
 
   formularioNumeracionFinal: FormGroup;
   formularioTurno: FormGroup;
 
-  usuario: Usuario | null = null;
-  ticketEncontrado: TicketResponse | null = null;
-  turnoActivo: TurnoIslaResponse | null = null;
-
+  turno$ = this.store.turno$;
 
   constructor();
 
   constructor() {
-
     this.formularioNumeracionFinal = this.fb.group({
       gasolina1: [0, Validators.required],
       gasolina2: [0, Validators.required],
@@ -58,16 +61,31 @@ export class IslaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.CierreIslaService.getTurnoActivo().subscribe({
-      next: (data: TurnoIslaResponse) => {
-        this.turnoActivo = data;
-        this.formularioNumeracionFinal.patchValue(data);
-        this.formularioNumeracionFinal.disable();
-        this.formularioTurno.patchValue(data);
-      },
+    this.turnoIslaService.getTurnoActivo().subscribe((turno) => {
+      this.store.setTurno(turno);
     });
-  }
 
+    this.turno$.subscribe((turno) => {
+      if (turno) {
+        this.formularioNumeracionFinal.patchValue({
+          gasolina1: turno.gasolinaFinal1,
+          gasolina2: turno.gasolinaFinal2,
+          gasolina3: turno.gasolinaFinal3,
+          gasolina4: turno.gasolinaFinal4,
+          diesel1: turno.dieselFinal1,
+          diesel2: turno.dieselFinal2,
+          diesel3: turno.dieselFinal3,
+          diesel4: turno.dieselFinal4,
+        });
+        this.formularioTurno.patchValue({
+          totalVentas: turno.totalVentas,
+          totalTiros: turno.totalTiros,
+        });
+      }
+    });
+
+    this.formularioNumeracionFinal.disable();
+  }
 
   habilitarEdicionFinal(): void {
     this.formularioNumeracionFinal.enable();
@@ -75,20 +93,22 @@ export class IslaComponent implements OnInit {
 
   calcularVenta(): void {
     if (this.formularioNumeracionFinal.valid) {
-      const valores: Numeracion = this.formularioNumeracionFinal.value;
-      this.CierreIslaService.calcularVentasIsla(valores).subscribe({
+
+      const numeracionFinal: Numeracion = this.formularioNumeracionFinal.value;
+
+      this.turnoIslaService.calcularVentasIsla(numeracionFinal).subscribe({
         next: (totalVentas: number) => {
-          this.mensajeService.success('Venta calculada con éxito');
-          if (this.turnoActivo) {
-            this.turnoActivo.totalVentas = totalVentas;
+          this.mensajeService.success('Numeración final actualizada con éxito');
+          if (this.turno$) {
+            this.store.actualizarNumeracionFinal(numeracionFinal);
+            this.store.actualizarVentas(totalVentas);
           }
           this.formularioNumeracionFinal.disable();
         },
         error: () => {
-          this.mensajeService.error('Error al calcular la venta');
+          this.mensajeService.error('Error al actualizar la numeración final');
         },
       });
     }
   }
-
 }

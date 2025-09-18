@@ -1,10 +1,9 @@
 // usuario.service.ts
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { tap } from 'rxjs/operators';
-import { format } from 'date-fns';
 import { Usuario, UsuarioLogin } from '../models/usuario';
 
 
@@ -19,8 +18,6 @@ export class UsuarioService {
   private usuarioActualSubject = new BehaviorSubject<Usuario | null>(null);
   usuarioActual$ = this.usuarioActualSubject.asObservable();
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
 
   constructor() {
     // Restaurar sesión si hay usuario guardado

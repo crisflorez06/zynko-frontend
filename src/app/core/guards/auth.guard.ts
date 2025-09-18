@@ -9,10 +9,6 @@ export class AuthGuard implements CanActivate {
   private usuarioService = inject(UsuarioService);
   private router = inject(Router);
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {}
 
   canActivate(): boolean {
     if (this.usuarioService.estaLogueado()) {
