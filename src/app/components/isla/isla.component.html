@@ -188,7 +188,12 @@
           <label for="creditos" class="form-label me-2" style="width: 80px"
             >Créditos</label
           >
-          <input type="number" id="creditos" class="form-control me-2" />
+          <input
+            type="number"
+            id="creditos"
+            class="form-control me-2"
+            formControlName="totalCreditos"
+          />
           <button
             type="button"
             class="btn btn-outline-primary btn-sm"
@@ -348,28 +353,6 @@
   </div>
 </div>
 
-<!-- Modal Créditos -->
-<div
-  class="modal fade"
-  id="creditosModal"
-  tabindex="-1"
-  aria-labelledby="creditosLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="creditosLabel">Detalle Créditos</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-      <div class="modal-body">Aquí va la información de Créditos.</div>
-    </div>
-  </div>
-</div>
 
 <!-- Modal Visas -->
 <div
@@ -442,3 +425,4 @@
 
 <app-numeracion-modal></app-numeracion-modal>
 <app-tiros-modal></app-tiros-modal>
+<app-creditos-modal></app-creditos-modal>
