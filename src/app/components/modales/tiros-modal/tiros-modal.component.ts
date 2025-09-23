@@ -28,8 +28,6 @@ export class TirosModalComponent implements OnInit {
 
   private store = inject(TurnoIslaStore);
 
-  turno$ = this.store.turno$;
-
   formularioTiro: FormGroup;
   tiros: Tiro[] = [];
   modoCreacionTiro = false;
@@ -69,8 +67,8 @@ export class TirosModalComponent implements OnInit {
     }
     const cantidad = this.formularioTiro.value.cantidad * 1000;
 
+    //logica por si es edicion o creacion
     if (this.tiroSeleccionado) {
-      // Modo edición
       const tiroActualizado: Tiro = {
         ...this.tiroSeleccionado,
         cantidad: cantidad,

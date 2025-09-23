@@ -56,9 +56,6 @@ export class TurnoIslaStore {
     }
   }
 
-  /**
-   * Actualiza el total de ventas
-   */
   actualizarVentas(totalVentas: number) {
     const actual = this.turnoSubject.value;
     if (actual) {
@@ -69,15 +66,22 @@ export class TurnoIslaStore {
     }
   }
 
-  /**
-   * Actualiza el total de tiros
-   */
   actualizarTiros(totalTiros: number) {
     const actual = this.turnoSubject.value;
     if (actual) {
       this.turnoSubject.next({
         ...actual,
         totalTiros,
+      });
+    }
+  }
+
+  actualizarCredito(totalCreditos: number) {
+    const actual = this.turnoSubject.value;
+    if (actual) {
+      this.turnoSubject.next({
+        ...actual,
+        totalCreditos,
       });
     }
   }

@@ -27,8 +27,9 @@ export interface TurnoIslaResponse {
   dieselFinal2: number;
   dieselFinal3: number;
   dieselFinal4: number;
-  
+
   totalVentas: number;
   totalTiros: number;
+  totalCreditos: number;
 }
 
