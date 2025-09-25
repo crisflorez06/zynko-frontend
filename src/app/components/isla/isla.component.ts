@@ -14,7 +14,8 @@ import { Numeracion } from '../../models/turnoIsla';
 import { NumeracionModalComponent } from '../modales/numeracion-modal/numeracion-modal.component';
 import { TirosModalComponent } from '../modales/tiros-modal/tiros-modal.component';
 import { TurnoIslaStore } from '../../store/turno-isla.store';
-import { CreditosModalComponent } from "../modales/creditos-modal/creditos-modal.component";
+import { CreditosModalComponent } from '../modales/creditos-modal/creditos-modal.component';
+import { VisasModalComponent } from '../modales/visas-modal/visas-modal.component';
 
 @Component({
   selector: 'app-isla',
@@ -26,8 +27,9 @@ import { CreditosModalComponent } from "../modales/creditos-modal/creditos-modal
     MatSnackBarModule,
     NumeracionModalComponent,
     TirosModalComponent,
-    CreditosModalComponent
-],
+    CreditosModalComponent,
+    VisasModalComponent,
+  ],
   templateUrl: './isla.component.html',
   styleUrl: './isla.component.css',
 })
@@ -60,6 +62,7 @@ export class IslaComponent implements OnInit {
       totalVentas: [0, Validators.required],
       totalTiros: [0, Validators.required],
       totalCreditos: [0, Validators.required],
+      totalVisas: [0, Validators.required],
     });
   }
 
@@ -84,6 +87,7 @@ export class IslaComponent implements OnInit {
           totalVentas: turno.totalVentas,
           totalTiros: turno.totalTiros,
           totalCreditos: turno.totalCreditos,
+          totalVisas: turno.totalVisas,
         });
       }
     });
@@ -97,7 +101,6 @@ export class IslaComponent implements OnInit {
 
   calcularVenta(): void {
     if (this.formularioNumeracionFinal.valid) {
-
       const numeracionFinal: Numeracion = this.formularioNumeracionFinal.value;
 
       this.turnoIslaService.calcularVentasIsla(numeracionFinal).subscribe({

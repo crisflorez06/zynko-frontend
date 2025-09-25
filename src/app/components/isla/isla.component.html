@@ -193,6 +193,7 @@
             id="creditos"
             class="form-control me-2"
             formControlName="totalCreditos"
+            readonly
           />
           <button
             type="button"
@@ -208,7 +209,13 @@
           <label for="visas" class="form-label me-2" style="width: 80px"
             >Visas</label
           >
-          <input type="number" id="visas" class="form-control me-2" />
+          <input
+            type="number"
+            id="visas"
+            class="form-control me-2"
+            readonly
+            formControlName="totalVisas"
+          />
           <button
             type="button"
             class="btn btn-outline-primary btn-sm"
@@ -223,7 +230,7 @@
           <label for="gastos" class="form-label me-2" style="width: 80px"
             >Gastos</label
           >
-          <input type="number" id="gastos" class="form-control me-2" />
+          <input type="number" id="gastos" class="form-control me-2" readonly />
           <button
             type="button"
             class="btn btn-outline-primary btn-sm"
@@ -238,7 +245,7 @@
           <label for="cuadre" class="form-label me-2" style="width: 80px"
             >Cuadre</label
           >
-          <input type="number" id="cuadre" class="form-control me-2" />
+          <input type="number" id="cuadre" class="form-control me-2" readonly />
           <button
             type="button"
             class="btn btn-outline-primary btn-sm"
@@ -353,30 +360,6 @@
   </div>
 </div>
 
-
-<!-- Modal Visas -->
-<div
-  class="modal fade"
-  id="visasModal"
-  tabindex="-1"
-  aria-labelledby="visasLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="visasLabel">Detalle Visas</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-      <div class="modal-body">Aquí va la información de Visas.</div>
-    </div>
-  </div>
-</div>
-
 <!-- Modal Gastos -->
 <div
   class="modal fade"
@@ -426,3 +409,4 @@
 <app-numeracion-modal></app-numeracion-modal>
 <app-tiros-modal></app-tiros-modal>
 <app-creditos-modal></app-creditos-modal>
+<app-visas-modal></app-visas-modal>

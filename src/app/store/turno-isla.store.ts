@@ -76,12 +76,22 @@ export class TurnoIslaStore {
     }
   }
 
-  actualizarCredito(totalCreditos: number) {
+  actualizarCreditos(totalCreditos: number) {
     const actual = this.turnoSubject.value;
     if (actual) {
       this.turnoSubject.next({
         ...actual,
         totalCreditos,
+      });
+    }
+  }
+
+  actualizarVisas(totalVisas: number) {
+    const actual = this.turnoSubject.value;
+    if (actual) {
+      this.turnoSubject.next({
+        ...actual,
+        totalVisas,
       });
     }
   }
