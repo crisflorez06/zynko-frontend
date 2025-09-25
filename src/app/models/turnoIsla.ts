@@ -31,5 +31,6 @@ export interface TurnoIslaResponse {
   totalVentas: number;
   totalTiros: number;
   totalCreditos: number;
+  totalVisas: number;
 }
 

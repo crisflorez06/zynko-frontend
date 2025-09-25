@@ -110,7 +110,7 @@ export class CreditosModalComponent implements OnInit {
           (sum, credito) => sum + credito.total,
           0
         );
-        this.store.actualizarCredito(totalCreditos);
+        this.store.actualizarCreditos(totalCreditos);
       },
       error: () => {
         this.mensajeService.error('Error al traer los créditos');
