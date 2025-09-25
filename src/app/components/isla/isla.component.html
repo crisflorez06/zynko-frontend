@@ -230,7 +230,13 @@
           <label for="gastos" class="form-label me-2" style="width: 80px"
             >Gastos</label
           >
-          <input type="number" id="gastos" class="form-control me-2" readonly />
+          <input
+            type="number"
+            id="gastos"
+            class="form-control me-2"
+            readonly
+            formControlName="totalGastos"
+          />
           <button
             type="button"
             class="btn btn-outline-primary btn-sm"
@@ -287,7 +293,6 @@
   </div>
 </div>
 
-<!-- MODALES -->
 <!-- Lavadero -->
 <div class="modal fade" id="lavaderoModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
@@ -360,29 +365,6 @@
   </div>
 </div>
 
-<!-- Modal Gastos -->
-<div
-  class="modal fade"
-  id="gastosModal"
-  tabindex="-1"
-  aria-labelledby="gastosLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="gastosLabel">Detalle Gastos</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-        ></button>
-      </div>
-      <div class="modal-body">Aquí va la información de Gastos.</div>
-    </div>
-  </div>
-</div>
-
 <!-- Modal Cuadre -->
 <div
   class="modal fade"
@@ -410,3 +392,4 @@
 <app-tiros-modal></app-tiros-modal>
 <app-creditos-modal></app-creditos-modal>
 <app-visas-modal></app-visas-modal>
+<app-gastos-modal></app-gastos-modal>

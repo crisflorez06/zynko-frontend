@@ -96,6 +96,16 @@ export class TurnoIslaStore {
     }
   }
 
+  actualizarGastos(totalGastos: number) {
+    const actual = this.turnoSubject.value;
+    if (actual) {
+      this.turnoSubject.next({
+        ...actual,
+        totalGastos,
+      });
+    }
+  }
+
   /**
    * Limpia el estado (ejemplo: al cerrar sesión o cerrar turno)
    */
