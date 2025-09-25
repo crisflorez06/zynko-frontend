@@ -16,6 +16,7 @@ import { TirosModalComponent } from '../modales/tiros-modal/tiros-modal.componen
 import { TurnoIslaStore } from '../../store/turno-isla.store';
 import { CreditosModalComponent } from '../modales/creditos-modal/creditos-modal.component';
 import { VisasModalComponent } from '../modales/visas-modal/visas-modal.component';
+import { GastosModalComponent } from "../modales/gastos-modal/gastos-modal.component";
 
 @Component({
   selector: 'app-isla',
@@ -29,7 +30,8 @@ import { VisasModalComponent } from '../modales/visas-modal/visas-modal.componen
     TirosModalComponent,
     CreditosModalComponent,
     VisasModalComponent,
-  ],
+    GastosModalComponent
+],
   templateUrl: './isla.component.html',
   styleUrl: './isla.component.css',
 })
@@ -63,6 +65,7 @@ export class IslaComponent implements OnInit {
       totalTiros: [0, Validators.required],
       totalCreditos: [0, Validators.required],
       totalVisas: [0, Validators.required],
+      totalGastos: [0, Validators.required],
     });
   }
 
@@ -88,6 +91,7 @@ export class IslaComponent implements OnInit {
           totalTiros: turno.totalTiros,
           totalCreditos: turno.totalCreditos,
           totalVisas: turno.totalVisas,
+          totalGastos: turno.totalGastos,
         });
       }
     });
