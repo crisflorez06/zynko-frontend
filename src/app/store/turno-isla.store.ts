@@ -79,7 +79,7 @@ export class TurnoIslaStore {
       });
     }
     this.actualizarCuadre();
-  }
+
 
   actualizarCreditos(totalCreditos: number) {
     const actual = this.turnoSubject.value;
