@@ -31,4 +31,8 @@ export class TurnoIslaService {
   calcularVentasIsla(request: Numeracion): Observable<number> {
     return this.http.post<number>(`${this.apiUrl}/calcular-total`, request);
   }
+
+  calcularCuadre(): Observable<number> {
+    return this.http.post<number>(`${this.apiUrl}/cuadre`, {});
+  }
 }

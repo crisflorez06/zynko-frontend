@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { TurnoIslaResponse, Numeracion } from '../models/turnoIsla';
+import { TurnoIslaService } from '../services/turnoIsla.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ import { TurnoIslaResponse, Numeracion } from '../models/turnoIsla';
 export class TurnoIslaStore {
   // Estado reactivo del turno
   private turnoSubject = new BehaviorSubject<TurnoIslaResponse | null>(null);
-
+  private turnoIslaService = inject(TurnoIslaService);
   // Observable que exponen los datos (lo que usarán los componentes)
   turno$ = this.turnoSubject.asObservable();
 
@@ -37,6 +38,7 @@ export class TurnoIslaStore {
         dieselInicial4: numeracion.diesel4,
       });
     }
+    this.actualizarCuadre();
   }
 
   actualizarNumeracionFinal(numeracion: Numeracion) {
@@ -54,6 +56,7 @@ export class TurnoIslaStore {
         dieselFinal4: numeracion.diesel4,
       });
     }
+    this.actualizarCuadre();
   }
 
   actualizarVentas(totalVentas: number) {
@@ -64,6 +67,7 @@ export class TurnoIslaStore {
         totalVentas,
       });
     }
+    this.actualizarCuadre();
   }
 
   actualizarTiros(totalTiros: number) {
@@ -74,7 +78,8 @@ export class TurnoIslaStore {
         totalTiros,
       });
     }
-  }
+    this.actualizarCuadre();
+  }git 
 
   actualizarCreditos(totalCreditos: number) {
     const actual = this.turnoSubject.value;
@@ -84,6 +89,7 @@ export class TurnoIslaStore {
         totalCreditos,
       });
     }
+    this.actualizarCuadre();
   }
 
   actualizarVisas(totalVisas: number) {
@@ -94,6 +100,7 @@ export class TurnoIslaStore {
         totalVisas,
       });
     }
+    this.actualizarCuadre();
   }
 
   actualizarGastos(totalGastos: number) {
@@ -104,6 +111,24 @@ export class TurnoIslaStore {
         totalGastos,
       });
     }
+    this.actualizarCuadre();
+  }
+
+  actualizarCuadre() {
+    this.turnoIslaService.calcularCuadre().subscribe({
+      next: (cuadre) => {
+        const actual = this.turnoSubject.value;
+        if (actual) {
+          this.turnoSubject.next({
+            ...actual,
+            cuadre,
+          });
+        }
+      },
+      error: (err) => {
+        console.error('Error al calcular el cuadre', err);
+      },
+    });
   }
 
   /**

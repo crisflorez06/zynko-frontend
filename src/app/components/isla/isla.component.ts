@@ -66,6 +66,7 @@ export class IslaComponent implements OnInit {
       totalCreditos: [0, Validators.required],
       totalVisas: [0, Validators.required],
       totalGastos: [0, Validators.required],
+      cuadre: [0, Validators.required],
     });
   }
 
@@ -92,6 +93,7 @@ export class IslaComponent implements OnInit {
           totalCreditos: turno.totalCreditos,
           totalVisas: turno.totalVisas,
           totalGastos: turno.totalGastos,
+          cuadre: turno.cuadre,
         });
       }
     });
