@@ -9,6 +9,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { CierreTurnoService } from '../../../services/cierre-turno.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { TurnoIslaStore } from '../../../store/turno-isla.store';
 
 @Component({
   selector: 'app-header',
@@ -20,6 +21,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 })
 export class HeaderComponent implements OnInit {
   private usuarioService = inject(UsuarioService);
+  private store = inject(TurnoIslaStore);
   private router = inject(Router);
   private ticketService = inject(TicketService);
   private mensajeService = inject(MensajeService);
@@ -29,10 +31,6 @@ export class HeaderComponent implements OnInit {
 
   usuario: Usuario | null = null;
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {}
 
   ngOnInit(): void {
     this.usuarioService.usuarioActual$.subscribe((user) => {
@@ -61,6 +59,7 @@ export class HeaderComponent implements OnInit {
             }
 
             this.usuarioService.logout();
+            this.store.clear();
             this.router.navigate(['/login']);
           },
           error: (err) => {
