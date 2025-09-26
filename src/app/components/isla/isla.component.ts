@@ -91,9 +91,11 @@ export class IslaComponent implements OnInit {
           totalVentas: turno.totalVentas,
           totalTiros: turno.totalTiros,
           totalCreditos: turno.totalCreditos,
-          totalVisas: turno.totalVisas,
+          totalVisas: turno.totalVisas ?? 0,
           totalGastos: turno.totalGastos,
-          cuadre: turno.cuadre,
+
+          cuadre: turno.cuadre ?? 0,
+
         });
       }
     });
