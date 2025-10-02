@@ -39,6 +39,7 @@ export class TurnoIslaStore {
       });
     }
     this.actualizarCuadre();
+
   }
 
   actualizarNumeracionFinal(numeracion: Numeracion) {
@@ -79,6 +80,7 @@ export class TurnoIslaStore {
       });
     }
     this.actualizarCuadre();
+  }
 
 
   actualizarCreditos(totalCreditos: number) {

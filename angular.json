@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "mialeds-frotend": {
+    "parqueadero-frontend": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/mialeds-frotend",
+            "outputPath": "dist/parqueadero-frontend",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -63,10 +63,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "mialeds-frotend:build:production"
+              "buildTarget": "parqueadero-frontend:build:production"
             },
             "development": {
-              "buildTarget": "mialeds-frotend:build:development"
+              "buildTarget": "parqueadero-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"

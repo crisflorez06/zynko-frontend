@@ -27,9 +27,6 @@ export class AppComponent {
 
   usuarioActual$: Usuario | null;
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
   constructor() {
     this.usuarioActual$ = this.usuarioService.getUsuarioActual();
   }

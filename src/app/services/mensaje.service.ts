@@ -5,11 +5,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class MensajeService {
   private snackBar = inject(MatSnackBar);
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {}
-
   success(mensaje: string) {
     this.snackBar.open(mensaje, '', {
       duration: 3000,
