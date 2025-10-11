@@ -17,6 +17,7 @@ import { TurnoIslaStore } from '../../store/turno-isla.store';
 import { CreditosModalComponent } from '../modales/creditos-modal/creditos-modal.component';
 import { VisasModalComponent } from '../modales/visas-modal/visas-modal.component';
 import { GastosModalComponent } from "../modales/gastos-modal/gastos-modal.component";
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-isla',
@@ -30,7 +31,8 @@ import { GastosModalComponent } from "../modales/gastos-modal/gastos-modal.compo
     TirosModalComponent,
     CreditosModalComponent,
     VisasModalComponent,
-    GastosModalComponent
+    GastosModalComponent,
+    RouterModule
 ],
   templateUrl: './isla.component.html',
   styleUrl: './isla.component.css',
@@ -45,6 +47,8 @@ export class IslaComponent implements OnInit {
   formularioTurno: FormGroup;
 
   turno$ = this.store.turno$;
+  resumenLavadero$ = this.store.resumenLavadero$;
+  totalAceites = 0;
 
   constructor();
 
@@ -88,7 +92,7 @@ export class IslaComponent implements OnInit {
           diesel4: turno.dieselFinal4,
         });
         this.formularioTurno.patchValue({
-          totalVentas: turno.totalVentas,
+          totalVentas: turno.totalVentas ?? 0,
           totalTiros: turno.totalTiros,
           totalCreditos: turno.totalCreditos,
           totalVisas: turno.totalVisas ?? 0,
@@ -101,6 +105,13 @@ export class IslaComponent implements OnInit {
     });
 
     this.formularioNumeracionFinal.disable();
+
+    this.store.cargarLavaderosDelDia().subscribe({
+      error: () =>
+        this.mensajeService.error(
+          'No fue posible obtener la información del lavadero.'
+        ),
+    });
   }
 
   habilitarEdicionFinal(): void {

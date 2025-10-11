@@ -49,6 +49,14 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'lavadero',
+    loadComponent: () =>
+      import('./components/lavadero/lavadero.component').then(
+        (m) => m.LavaderoComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'isla',
     loadComponent: () =>
       import('./components/isla/isla.component').then((m) => m.IslaComponent),

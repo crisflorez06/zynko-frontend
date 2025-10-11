@@ -50,6 +50,7 @@ export class TurnosComponent implements OnInit {
     usuarios: [],
     tiposVehiculo: [],
     parqueaderos: [],
+    lavadores: [],
   };
 
   /** Inserted by Angular inject() migration for backwards compatibility */

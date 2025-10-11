@@ -1,7 +1,10 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { TurnoIslaResponse, Numeracion } from '../models/turnoIsla';
 import { TurnoIslaService } from '../services/turnoIsla.service';
+import { Lavado, LavadoRequest, ResumenLavadero } from '../models/lavadero';
+import { LavaderoService } from '../services/lavadero.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +13,11 @@ export class TurnoIslaStore {
   // Estado reactivo del turno
   private turnoSubject = new BehaviorSubject<TurnoIslaResponse | null>(null);
   private turnoIslaService = inject(TurnoIslaService);
+  private lavaderoService = inject(LavaderoService);
+  private lavadosSubject = new BehaviorSubject<Lavado[]>([]);
+  private resumenLavaderoSubject = new BehaviorSubject<ResumenLavadero | null>(null);
+  lavados$ = this.lavadosSubject.asObservable();
+  resumenLavadero$ = this.resumenLavaderoSubject.asObservable();
   // Observable que exponen los datos (lo que usarán los componentes)
   turno$ = this.turnoSubject.asObservable();
 
@@ -133,11 +141,57 @@ export class TurnoIslaStore {
     });
   }
 
+  cargarLavaderosDelDia(): Observable<void> {
+    return forkJoin({
+      lavados: this.lavaderoService.obtenerLavadosDelDia(),
+      resumen: this.lavaderoService.obtenerResumenTurno(),
+    }).pipe(
+      tap(({ lavados, resumen }) => {
+        this.lavadosSubject.next(lavados);
+        if (resumen) {
+          this.resumenLavaderoSubject.next({
+            ...resumen,
+            detalleLavadores: resumen.detalleLavadores ?? [],
+          });
+        } else {
+          this.resumenLavaderoSubject.next(null);
+        }
+      }),
+      map(() => undefined)
+    );
+  }
+
+  registrarLavado(request: LavadoRequest): Observable<Lavado> {
+    return this.lavaderoService.registrarLavado(request).pipe(
+      switchMap((lavado) =>
+        this.cargarLavaderosDelDia().pipe(map(() => lavado))
+      )
+    );
+  }
+
+  actualizarLavado(id: number, request: LavadoRequest): Observable<Lavado> {
+    return this.lavaderoService.actualizarLavado(id, request).pipe(
+      switchMap((lavado) =>
+        this.cargarLavaderosDelDia().pipe(map(() => lavado))
+      )
+    );
+  }
+
+  cambiarEstadoLavado(id: number, pagado: boolean): Observable<Lavado> {
+    return this.lavaderoService.cambiarEstado(id, pagado).pipe(
+      switchMap((lavado) =>
+        this.cargarLavaderosDelDia().pipe(map(() => lavado))
+      )
+    );
+  }
+
   /**
    * Limpia el estado (ejemplo: al cerrar sesión o cerrar turno)
    */
   clear() {
     this.turnoSubject.next(null);
+    this.lavadosSubject.next([]);
+    this.resumenLavaderoSubject.next(null);
   }
 
   /**

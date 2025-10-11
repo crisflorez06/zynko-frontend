@@ -67,6 +67,7 @@ export class EntradaComponent implements OnInit {
     usuarios: [],
     tiposVehiculo: [],
     parqueaderos: [],
+    lavadores: [],
   };
 
   constructor() {

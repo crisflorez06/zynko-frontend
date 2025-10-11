@@ -33,6 +33,5 @@ export interface TurnoIslaResponse {
   totalCreditos: number;
   totalVisas: number;
   totalGastos: number;
-  cuadre:number;
+  cuadre: number;
 }
-

@@ -1,0 +1,133 @@
+<div
+  class="modal fade"
+  id="resumenLavaderoModal"
+  tabindex="-1"
+  aria-labelledby="resumenLavaderoModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="resumenLavaderoModalLabel">
+          Resumen del Turno - Lavadero
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <ng-container
+          *ngIf="(resumenLavadero$ | async) as resumen; else sinResumen"
+        >
+          <div class="row g-3 mb-3">
+            <div class="col-md-4 col-sm-6">
+              <div class="resumen-stat border rounded p-3 text-center h-100">
+                <p class="text-muted mb-1">Total lavados</p>
+                <p class="fs-4 fw-bold mb-0">{{ resumen.totalLavados }}</p>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="resumen-stat border rounded p-3 text-center h-100">
+                <p class="text-muted mb-1">Total recaudado</p>
+                <p class="fs-5 fw-bold mb-0">
+                  {{
+                    resumen.totalRecaudado
+                      | currency : 'COP' : 'symbol-narrow' : '1.0-0'
+                  }}
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="resumen-stat border rounded p-3 text-center h-100">
+                <p class="text-muted mb-1">Total pendiente</p>
+                <p class="fs-5 fw-bold mb-0">
+                  {{
+                    resumen.totalPendiente
+                      | currency : 'COP' : 'symbol-narrow' : '1.0-0'
+                  }}
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="resumen-stat border rounded p-3 text-center h-100">
+                <p class="text-muted mb-1">Para estación</p>
+                <p class="fs-5 fw-bold mb-0">
+                  {{
+                    resumen.totalEstacion
+                      | currency : 'COP' : 'symbol-narrow' : '1.0-0'
+                  }}
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <div class="resumen-stat border rounded p-3 text-center h-100">
+                <p class="text-muted mb-1">Total lavadores</p>
+                <p class="fs-5 fw-bold mb-0">
+                  {{ resumen.totalLavadores | currency : 'COP' : 'symbol-narrow' : '1.0-0' }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-responsive shadow-sm rounded">
+            <table class="table table-striped table-hover align-middle text-center">
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col" class="border-end">Lavador</th>
+                  <th scope="col" class="border-end">Total recaudado</th>
+                  <th scope="col" class="border-end">Para estación</th>
+                  <th scope="col" class="border-end">Para lavador</th>
+                  <th scope="col">Vehículos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="resumen.detalleLavadores.length === 0">
+                  <td colspan="5" class="py-4 text-muted">
+                    No hay lavadores registrados en el turno.
+                  </td>
+                </tr>
+                <tr
+                  *ngFor="let detalle of resumen.detalleLavadores"
+                  class="align-middle"
+                >
+                  <td class="border-end">{{ detalle.lavador }}</td>
+                  <td class="border-end">
+                    {{
+                      detalle.totalRecaudado
+                        | currency : 'COP' : 'symbol-narrow' : '1.0-0'
+                    }}
+                  </td>
+                  <td class="border-end">
+                    {{
+                      detalle.paraEstacion
+                        | currency : 'COP' : 'symbol-narrow' : '1.0-0'
+                    }}
+                  </td>
+                  <td class="border-end">
+                    {{
+                      detalle.paraLavador
+                        | currency : 'COP' : 'symbol-narrow' : '1.0-0'
+                    }}
+                  </td>
+                  <td>
+                    {{ detalle.vehiculos.length }} vehículo{{
+                      detalle.vehiculos.length === 1 ? '' : 's'
+                    }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-container>
+        <ng-template #sinResumen>
+          <div class="text-center text-muted py-4">
+            No hay información de resumen disponible para el turno actual.
+          </div>
+        </ng-template>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
