@@ -1,10 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { TurnoIslaResponse, Numeracion } from '../models/turnoIsla';
-import { TurnoIslaService } from '../services/turnoIsla.service';
-import { Lavado, LavadoRequest, ResumenLavadero } from '../models/lavadero';
-import { LavaderoService } from '../services/lavadero.service';
+import { TurnoIslaResponse, Numeracion } from '../models/isla/turnoIsla';
+import { TurnoIslaService } from '../services/isla/turno-isla.service';
+import {
+  Lavado,
+  LavadoRequest,
+  ResumenLavadero,
+} from '../models/lavado/lavadero';
+import { LavaderoService } from '../services/lavado/lavadero.service';
 
 @Injectable({
   providedIn: 'root',
