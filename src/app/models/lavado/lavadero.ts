@@ -2,12 +2,15 @@ import { VehiculoCierre } from "../vehiculos";
 export interface LavadoRequest {
   placa: string;
   tipoVehiculo: string;
-  lavador: string;
+  lavadorId: number;
   valorTotal: number;
+  pagado: boolean;
 }
 
 export interface Lavado extends LavadoRequest {
   id: number;
+  lavadorNombre?: string;
+  lavador?: string;
   pagado: boolean;
   fechaRegistro: string;
 }
@@ -27,4 +30,15 @@ export interface ResumenLavadero {
   totalLavadores: number;
   totalPendiente: number;
   detalleLavadores: ResumenLavador[];
+}
+
+export interface ResumenSemanalLavador {
+  lavador: string;
+  domingo: number;
+  lunes: number;
+  martes: number;
+  miercoles: number;
+  jueves: number;
+  viernes: number;
+  sabado: number;
 }

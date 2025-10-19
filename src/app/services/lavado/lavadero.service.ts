@@ -6,6 +6,7 @@ import {
   Lavado,
   LavadoRequest,
   ResumenLavadero,
+  ResumenSemanalLavador,
 } from '../../models/lavado/lavadero';
 
 @Injectable({
@@ -27,6 +28,14 @@ export class LavaderoService {
     return this.http.put<Lavado>(`${this.apiUrl}/${id}`, request);
   }
 
+  eliminarLavado(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  ajustarFechas(): Observable<string> {
+    return this.http.put(`${this.apiUrl}/ajustar-fechas`, {}, { responseType: 'text' });
+  }
+
   cambiarEstado(id: number, pagado: boolean): Observable<Lavado> {
     return this.http.patch<Lavado>(
       `${this.apiUrl}/${id}/estado`,
@@ -37,5 +46,9 @@ export class LavaderoService {
 
   obtenerResumenTurno(): Observable<ResumenLavadero> {
     return this.http.get<ResumenLavadero>(`${this.apiUrl}/turno-activo/resumen`);
+  }
+
+  obtenerResumenSemanal(): Observable<ResumenSemanalLavador[]> {
+    return this.http.get<ResumenSemanalLavador[]>(`${this.apiUrl}/resumen-semanal`);
   }
 }

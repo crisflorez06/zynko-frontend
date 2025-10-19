@@ -7,6 +7,7 @@ import {
   Lavado,
   LavadoRequest,
   ResumenLavadero,
+  ResumenSemanalLavador,
 } from '../models/lavado/lavadero';
 import { LavaderoService } from '../services/lavado/lavadero.service';
 
@@ -20,8 +21,11 @@ export class TurnoIslaStore {
   private lavaderoService = inject(LavaderoService);
   private lavadosSubject = new BehaviorSubject<Lavado[]>([]);
   private resumenLavaderoSubject = new BehaviorSubject<ResumenLavadero | null>(null);
+  private resumenSemanalSubject =
+    new BehaviorSubject<ResumenSemanalLavador[] | null>(null);
   lavados$ = this.lavadosSubject.asObservable();
   resumenLavadero$ = this.resumenLavaderoSubject.asObservable();
+  resumenSemanalLavadero$ = this.resumenSemanalSubject.asObservable();
   // Observable que exponen los datos (lo que usarán los componentes)
   turno$ = this.turnoSubject.asObservable();
 
@@ -189,6 +193,25 @@ export class TurnoIslaStore {
     );
   }
 
+  eliminarLavado(id: number): Observable<void> {
+    return this.lavaderoService.eliminarLavado(id).pipe(
+      switchMap(() => this.cargarLavaderosDelDia())
+    );
+  }
+
+  ajustarFechasLavadero(): Observable<void> {
+    return this.lavaderoService.ajustarFechas().pipe(
+      switchMap(() => this.cargarLavaderosDelDia())
+    );
+  }
+
+  cargarResumenSemanalLavadero(): Observable<ResumenSemanalLavador[]> {
+    this.resumenSemanalSubject.next(null);
+    return this.lavaderoService.obtenerResumenSemanal().pipe(
+      tap((datos) => this.resumenSemanalSubject.next(datos))
+    );
+  }
+
   /**
    * Limpia el estado (ejemplo: al cerrar sesión o cerrar turno)
    */
@@ -196,6 +219,7 @@ export class TurnoIslaStore {
     this.turnoSubject.next(null);
     this.lavadosSubject.next([]);
     this.resumenLavaderoSubject.next(null);
+    this.resumenSemanalSubject.next(null);
   }
 
   /**

@@ -38,7 +38,7 @@
               formControlName="tipoVehiculo"
               [class.is-invalid]="campoInvalido('tipoVehiculo')"
             >
-              <option value="">Seleccione...</option>
+              <option [ngValue]="null">Seleccione...</option>
               <option *ngFor="let tipo of tiposVehiculo" [value]="tipo">
                 {{ tipo }}
               </option>
@@ -53,12 +53,12 @@
             <select
               id="lavadoLavador"
               class="form-select"
-              formControlName="lavador"
-              [class.is-invalid]="campoInvalido('lavador')"
+              formControlName="lavadorId"
+              [class.is-invalid]="campoInvalido('lavadorId')"
             >
               <option value="">Seleccione...</option>
-              <option *ngFor="let lavador of lavadores" [value]="lavador">
-                {{ lavador }}
+              <option *ngFor="let lavador of lavadores" [ngValue]="lavador.id">
+                {{ lavador.nombre }}
               </option>
             </select>
             <div class="invalid-feedback">El lavador es obligatorio.</div>
@@ -73,13 +73,13 @@
                 id="lavadoValor"
                 class="form-control"
                 placeholder="0"
-                min="0"
+                min="1"
                 formControlName="valorTotal"
                 [class.is-invalid]="campoInvalido('valorTotal')"
               />
             </div>
             <div class="invalid-feedback d-block" *ngIf="campoInvalido('valorTotal')">
-              Ingresa un valor válido.
+              Ingresa un valor mayor a 0.
             </div>
           </div>
         </form>

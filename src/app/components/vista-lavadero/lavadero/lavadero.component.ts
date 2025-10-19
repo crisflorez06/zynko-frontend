@@ -4,7 +4,10 @@ import { TurnoIslaStore } from '../../../store/turno-isla.store';
 import { MensajeService } from '../../../services/mensaje.service';
 import { LavaderoResumenModalComponent } from '../modales/lavadero-resumen-modal/lavadero-resumen-modal.component';
 import { LavaderoFormModalComponent } from '../modales/lavadero-form-modal/lavadero-form-modal.component';
+import { LavaderoResumenSemanalModalComponent } from '../modales/lavadero-resumen-semanal-modal/lavadero-resumen-semanal-modal.component';
 import { Lavado, LavadoRequest } from '../../../models/lavado/lavadero';
+
+type AccionLavadero = 'eliminar' | 'ajustar' | null;
 
 @Component({
   selector: 'app-lavadero',
@@ -12,6 +15,7 @@ import { Lavado, LavadoRequest } from '../../../models/lavado/lavadero';
   imports: [
     CommonModule,
     LavaderoResumenModalComponent,
+    LavaderoResumenSemanalModalComponent,
     LavaderoFormModalComponent,
   ],
   templateUrl: './lavadero.component.html',
@@ -25,6 +29,8 @@ export class LavaderoComponent implements OnInit {
   lavadoSeleccionado: Lavado | null = null;
   modoEdicion = false;
   modalTrigger = 0;
+  accionPendiente: AccionLavadero = null;
+  lavadoPendiente: Lavado | null = null;
 
   ngOnInit(): void {
     this.store.cargarLavaderosDelDia().subscribe({
@@ -77,7 +83,9 @@ export class LavaderoComponent implements OnInit {
     this.store.cambiarEstadoLavado(lavado.id, pagado).subscribe({
       next: () => {
         this.mensajeService.success(
-          pagado ? 'Lavado marcado como pagado.' : 'Lavado marcado como pendiente.'
+          pagado
+            ? 'Lavado marcado como pagado.'
+            : 'Lavado marcado como pendiente.'
         );
       },
       error: () => {
@@ -86,18 +94,103 @@ export class LavaderoComponent implements OnInit {
     });
   }
 
-  private cerrarModal(): void {
-    const modalElement = document.getElementById('lavaderoFormModal');
-    if (!modalElement) {
-      return;
+  abrirConfirmacionEliminar(lavado: Lavado): void {
+    this.accionPendiente = 'eliminar';
+    this.lavadoPendiente = lavado;
+    this.mostrarModalConfirmacion();
+  }
+
+  abrirConfirmacionAjustar(): void {
+    this.accionPendiente = 'ajustar';
+    this.lavadoPendiente = null;
+    this.mostrarModalConfirmacion();
+  }
+
+  abrirResumenSemanal(): void {
+    this.store.cargarResumenSemanalLavadero().subscribe({
+      error: () => {
+        this.mensajeService.error('No fue posible cargar el resumen semanal.');
+      },
+    });
+  }
+
+  confirmarAccion(): void {
+    if (this.accionPendiente === 'eliminar' && this.lavadoPendiente) {
+      this.ejecutarEliminacion(this.lavadoPendiente);
+    } else if (this.accionPendiente === 'ajustar') {
+      this.ejecutarAjusteFechas();
     }
-    const bootstrapRef =
-      typeof window !== 'undefined' ? (window as any).bootstrap : undefined;
-    const modalInstance =
-      bootstrapRef?.Modal?.getInstance(modalElement) ??
-      (bootstrapRef?.Modal ? new bootstrapRef.Modal(modalElement) : null);
+
+    this.cancelarAccion();
+  }
+
+  cancelarAccion(): void {
+    this.accionPendiente = null;
+    this.lavadoPendiente = null;
+    this.cerrarModalConfirmacion();
+  }
+
+  private ejecutarEliminacion(lavado: Lavado): void {
+    const id = Number(lavado.id);
+    const totalOriginal = lavado.valorTotal;
+    lavado.valorTotal = 0;
+
+    this.store.eliminarLavado(id).subscribe({
+      next: () => {
+        this.mensajeService.success('Lavado eliminado con éxito.');
+      },
+      error: () => {
+        lavado.valorTotal = totalOriginal;
+        this.mensajeService.error('No fue posible eliminar el lavado.');
+      },
+    });
+  }
+
+  private ejecutarAjusteFechas(): void {
+    this.store.ajustarFechasLavadero().subscribe({
+      next: () => {
+        this.mensajeService.success('Vehículos pendientes movidos al día siguiente.');
+      },
+      error: () => {
+        this.mensajeService.error('No fue posible ajustar las fechas.');
+      },
+    });
+  }
+
+  private cerrarModal(): void {
+    const modalInstance = this.obtenerInstanciaModal('lavaderoFormModal');
     modalInstance?.hide();
     this.modoEdicion = false;
     this.lavadoSeleccionado = null;
+  }
+
+  private mostrarModalConfirmacion(): void {
+    const modalInstance = this.obtenerInstanciaModal('confirmacionAccionModal');
+    modalInstance?.show();
+  }
+
+  private cerrarModalConfirmacion(): void {
+    const modalInstance = this.obtenerInstanciaModal('confirmacionAccionModal');
+    modalInstance?.hide();
+  }
+
+  private obtenerInstanciaModal(elementId: string, createIfMissing = true): any {
+    const modalElement = document.getElementById(elementId);
+    if (!modalElement) {
+      return null;
+    }
+
+    const bootstrapRef =
+      typeof window !== 'undefined' ? (window as any).bootstrap : undefined;
+    if (!bootstrapRef?.Modal) {
+      return null;
+    }
+
+    const existing = bootstrapRef.Modal.getInstance(modalElement);
+    if (existing || !createIfMissing) {
+      return existing;
+    }
+
+    return new bootstrapRef.Modal(modalElement);
   }
 }
