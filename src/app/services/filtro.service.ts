@@ -12,10 +12,6 @@ export class FiltroService {
 
   private apiUrl = `${environment.apiUrl}/filtros`;
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() { }
 
   getFiltros(): Observable<FiltrosDTO> {
     return this.http.get<FiltrosDTO>(this.apiUrl);

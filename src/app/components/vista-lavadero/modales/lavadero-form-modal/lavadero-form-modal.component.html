@@ -1,0 +1,106 @@
+<div
+  class="modal fade"
+  id="lavaderoFormModal"
+  tabindex="-1"
+  aria-labelledby="lavaderoFormModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="lavaderoFormModalLabel">
+          {{ modoEdicion ? 'Editar Lavado' : 'Registrar Lavado' }}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formularioLavado">
+          <div class="mb-3">
+            <label for="lavadoPlaca" class="form-label">Placa</label>
+            <input
+              type="text"
+              id="lavadoPlaca"
+              class="form-control text-uppercase"
+              placeholder="ABC123"
+              formControlName="placa"
+              maxlength="8"
+              autocomplete="off"
+              [class.is-invalid]="campoInvalido('placa')"
+            />
+            <div class="invalid-feedback">La placa es obligatoria.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="lavadoTipo" class="form-label">Tipo de vehículo</label>
+            <select
+              id="lavadoTipo"
+              class="form-select"
+              formControlName="tipoVehiculo"
+              [class.is-invalid]="campoInvalido('tipoVehiculo')"
+            >
+              <option [ngValue]="null">Seleccione...</option>
+              <option *ngFor="let tipo of tiposVehiculo" [value]="tipo">
+                {{ tipo }}
+              </option>
+            </select>
+            <div class="invalid-feedback">
+              El tipo de vehículo es obligatorio.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="lavadoLavador" class="form-label">Lavador</label>
+            <select
+              id="lavadoLavador"
+              class="form-select"
+              formControlName="lavadorId"
+              [class.is-invalid]="campoInvalido('lavadorId')"
+            >
+              <option value="">Seleccione...</option>
+              <option *ngFor="let lavador of lavadores" [ngValue]="lavador.id">
+                {{ lavador.nombre }}
+              </option>
+            </select>
+            <div class="invalid-feedback">El lavador es obligatorio.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="lavadoValor" class="form-label">Valor total</label>
+            <div class="input-group">
+              <span class="input-group-text">$</span>
+              <input
+                type="number"
+                id="lavadoValor"
+                class="form-control"
+                placeholder="0"
+                min="1"
+                formControlName="valorTotal"
+                [class.is-invalid]="campoInvalido('valorTotal')"
+              />
+            </div>
+            <div class="invalid-feedback d-block" *ngIf="campoInvalido('valorTotal')">
+              Ingresa un valor mayor a 0.
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="guardar()"
+          [disabled]="formularioLavado.invalid"
+        >
+          {{ modoEdicion ? 'Actualizar' : 'Registrar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

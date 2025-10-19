@@ -25,10 +25,7 @@ export class LoginComponent {
   private mensajeService = inject(MensajeService);
 
   formularioLogin: FormGroup;
-  mensajeError: string = '';
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
+  mensajeError = '';
 
   constructor() {
     this.formularioLogin = this.fb.group({

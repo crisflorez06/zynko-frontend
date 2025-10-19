@@ -1,0 +1,16 @@
+.nav-pills .nav-link {
+  font-size: 1.2rem; /* Aumenta el tamaño de la fuente */
+  padding: 0.8rem 1.5rem; /* Aumenta el padding para hacer los botones más grandes */
+}
+
+.lavadero-summary-card,
+.parqueadero-summary-card,
+.aceites-summary-card {
+  background-color: #f8f9fa;
+}
+
+.lavadero-summary-card .card-body,
+.parqueadero-summary-card .card-body,
+.aceites-summary-card .card-body {
+  padding: 1rem 1.25rem;
+}

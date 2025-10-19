@@ -11,7 +11,7 @@ export const routes: Routes = [
   {
     path: 'tabla',
     loadComponent: () =>
-      import('./components/tabla/tabla.component').then(
+      import('./components/vista-parqueadero/tabla/tabla.component').then(
         (m) => m.TablaComponent
       ),
     canActivate: [AuthGuard],
@@ -19,7 +19,7 @@ export const routes: Routes = [
   {
     path: 'salida',
     loadComponent: () =>
-      import('./components/salida/salida.component').then(
+      import('./components/vista-parqueadero/salida/salida.component').then(
         (m) => m.SalidaComponent
       ),
     canActivate: [AuthGuard],
@@ -27,31 +27,33 @@ export const routes: Routes = [
   {
     path: 'entrada',
     loadComponent: () =>
-      import('./components/entrada/entrada.component').then(
+      import('./components/vista-parqueadero/entrada/entrada.component').then(
         (m) => m.EntradaComponent
-      ),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'total',
-    loadComponent: () =>
-      import('./components/total/total.component').then(
-        (m) => m.TotalComponent
       ),
     canActivate: [AuthGuard],
   },
   {
     path: 'turnos',
     loadComponent: () =>
-      import('./components/turnos/turnos.component').then(
+      import('./components/vista-parqueadero/turnos/turnos.component').then(
         (m) => m.TurnosComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'lavadero',
+    loadComponent: () =>
+      import('./components/vista-lavadero/lavadero/lavadero.component').then(
+        (m) => m.LavaderoComponent
       ),
     canActivate: [AuthGuard],
   },
   {
     path: 'isla',
     loadComponent: () =>
-      import('./components/isla/isla.component').then((m) => m.IslaComponent),
+      import('./components/vista-isla/isla/isla.component').then(
+        (m) => m.IslaComponent
+      ),
     canActivate: [AuthGuard],
   },
 

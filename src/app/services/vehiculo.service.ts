@@ -17,11 +17,6 @@ export class VehiculoService {
 
   private apiUrl = `${environment.apiUrl}/vehiculos`;
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
-  constructor() {}
-
   // ===============================
   // 1. Obtener todos los vehículos
   // ===============================

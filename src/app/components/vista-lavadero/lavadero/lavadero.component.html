@@ -1,0 +1,169 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+    <h3 class="mb-0">Registro de Lavados</h3>
+    <div class="d-flex gap-2">
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#lavaderoFormModal"
+        (click)="abrirCrear()"
+      >
+        Registrar lavado
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-toggle="modal"
+        data-bs-target="#resumenLavaderoModal"
+      >
+        Ver resumen del turno
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#lavaderoResumenSemanalModal"
+        (click)="abrirResumenSemanal()"
+      >
+        Resumen semanal
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="abrirConfirmacionAjustar()"
+      >
+        Ajustar fechas
+      </button>
+    </div>
+  </div>
+
+  <div class="table-responsive shadow-sm rounded">
+    <table class="table table-hover align-middle border text-center">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col" class="border-end">ID</th>
+          <th scope="col" class="border-end">Placa</th>
+          <th scope="col" class="border-end">Tipo Vehículo</th>
+          <th scope="col" class="border-end">Lavador</th>
+          <th scope="col" class="border-end">Fecha Registro</th>
+          <th scope="col" class="border-end">Valor Total</th>
+          <th scope="col" class="border-end">Estado</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="(lavados$ | async) as lavados">
+        <tr *ngIf="lavados.length === 0">
+          <td colspan="8" class="py-4 text-muted">
+            No hay lavados registrados en el turno actual.
+          </td>
+        </tr>
+        <ng-container *ngIf="lavados.length > 0">
+          <tr *ngFor="let lavado of lavados">
+            <td class="border-end">{{ lavado.id }}</td>
+            <td class="border-end text-uppercase">{{ lavado.placa }}</td>
+            <td class="border-end">{{ lavado.tipoVehiculo }}</td>
+            <td class="border-end">{{ lavado.lavadorNombre || lavado.lavador || '—' }}</td>
+            <td class="border-end">
+              {{ lavado.fechaRegistro | date : 'dd/MM/yyyy HH:mm' }}
+            </td>
+            <td class="border-end">
+              {{
+                lavado.valorTotal
+                  | currency : 'COP' : 'symbol-narrow' : '1.0-0'
+              }}
+            </td>
+            <td class="border-end">
+              <span
+                class="badge px-3"
+                [ngClass]="{
+                  'bg-success': lavado.pagado,
+                  'bg-warning text-dark': !lavado.pagado
+                }"
+              >
+                {{ lavado.pagado ? 'Pagado' : 'Pendiente' }}
+              </span>
+            </td>
+            <td class="text-center">
+              <span *ngIf="lavado.valorTotal === 0" class="text-muted small fst-italic">
+                Eliminado
+              </span>
+              <ng-container *ngIf="lavado.valorTotal !== 0">
+                <button
+                  class="btn btn-outline-warning btn-sm me-2"
+                  title="Editar"
+                  data-bs-toggle="modal"
+                  data-bs-target="#lavaderoFormModal"
+                  (click)="abrirEditar(lavado)"
+                >
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button
+                  class="btn btn-outline-success btn-sm me-2"
+                  (click)="cambiarEstado(lavado)"
+                  [title]="lavado.pagado ? 'Marcar como pendiente' : 'Marcar como pagado'"
+                  *ngIf="!lavado.pagado"
+                >
+                  <i class="bi" [ngClass]="lavado.pagado ? 'bi-arrow-counterclockwise' : 'bi-check-circle'"></i>
+                </button>
+                <button
+                  class="btn btn-outline-danger btn-sm"
+                  (click)="abrirConfirmacionEliminar(lavado)"
+                  title="Eliminar"
+                >
+                  <i class="bi bi-trash"></i>
+                </button>
+              </ng-container>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <app-lavadero-form-modal
+    [modoEdicion]="modoEdicion"
+    [lavado]="lavadoSeleccionado"
+    [trigger]="modalTrigger"
+    (crear)="registrarLavado($event)"
+    (actualizar)="actualizarLavado($event)"
+  ></app-lavadero-form-modal>
+  <app-lavadero-resumen-modal></app-lavadero-resumen-modal>
+  <app-lavadero-resumen-semanal-modal></app-lavadero-resumen-semanal-modal>
+
+  <div
+    class="modal fade"
+    id="confirmacionAccionModal"
+    tabindex="-1"
+    aria-labelledby="confirmacionAccionLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-warning-subtle">
+          <h5 class="modal-title" id="confirmacionAccionLabel">
+            Confirmar acción
+          </h5>
+          <button type="button" class="btn-close" (click)="cancelarAccion()"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-0" *ngIf="accionPendiente === 'eliminar' && lavadoPendiente">
+            ¿Seguro deseas eliminar el lavado de la placa
+            <strong>{{ lavadoPendiente.placa }}</strong>?
+          </p>
+          <p class="mb-0" *ngIf="accionPendiente === 'ajustar'">
+            Los lavados pendientes se moverán a la fecha siguiente. ¿Deseas continuar?
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" (click)="cancelarAccion()">
+            Cancelar
+          </button>
+          <button type="button" class="btn btn-warning" (click)="confirmarAccion()">
+            Confirmar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

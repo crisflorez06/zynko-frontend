@@ -19,8 +19,7 @@ import { UsuarioService } from './services/usuario.service';
     FooterComponent,
     LoaderComponent
   ],
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
   private usuarioService = inject(UsuarioService);

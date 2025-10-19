@@ -14,7 +14,7 @@ export class QzService {
         resolver: (
           executor: (
             resolve: (value?: unknown) => void,
-            reject: (reason?: unknown) => void
+            reject: (reason?: any) => void
           ) => void
         ) => Promise<unknown>
       ) => new Promise(resolver)
@@ -24,7 +24,7 @@ export class QzService {
     qz.security.setCertificatePromise(
       (
         resolve: (cert: string) => void,
-        reject: (reason?: unknown) => void
+        reject: (reason?: any) => void
       ) => {
         firstValueFrom(
           this.http.get('/assets/digital-certificate.txt', {

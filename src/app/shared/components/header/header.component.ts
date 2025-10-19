@@ -2,11 +2,11 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Usuario } from '../../../models/usuario';
 import { UsuarioService } from '../../../services/usuario.service';
-import { TicketService } from '../../../services/ticket.service';
+import { TicketParqueaderoService } from '../../../services/parqueadero/ticket-parqueadero.service';
 import { MensajeService } from '../../../services/mensaje.service';
 import { QzService } from '../../../services/qz.service';
 import { CommonModule, DatePipe } from '@angular/common';
-import { CierreTurnoService } from '../../../services/cierre-turno.service';
+import { CierreParqueaderoService } from '../../../services/parqueadero/cierre-parqueadero.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { TurnoIslaStore } from '../../../store/turno-isla.store';
@@ -23,10 +23,10 @@ export class HeaderComponent implements OnInit {
   private usuarioService = inject(UsuarioService);
   private store = inject(TurnoIslaStore);
   private router = inject(Router);
-  private ticketService = inject(TicketService);
+  private ticketService = inject(TicketParqueaderoService);
   private mensajeService = inject(MensajeService);
   private qzService = inject(QzService);
-  private cierreTurnoService = inject(CierreTurnoService);
+  private cierreTurnoService = inject(CierreParqueaderoService);
   private dialog = inject(MatDialog);
 
   usuario: Usuario | null = null;
